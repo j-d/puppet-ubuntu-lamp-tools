@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+    DocumentRoot "/var/www/web"
+    DirectoryIndex app.php
+    ServerName <%= @server_name %>
+    <Directory "/var/www/web">
+        AllowOverride All
+        Allow from All
+    </Directory>
+</VirtualHost>

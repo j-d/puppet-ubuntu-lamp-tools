@@ -13,7 +13,7 @@ class ubuntu_lamp_tools::vhost (
   file { "${site_name}.conf":
     ensure  => file,
     path    => "/etc/apache2/sites-available/${site_name}.conf",
-    content => template('/vagrant/puppet/templates/vhost.conf.erb'),
+    content => template('/vagrant/puppet/modules/ubuntu_lamp_tools/templates/vhost.conf.erb'), #TODO: Replace with dynamic path
     require => Package['apache2'],
     before  => [
       Exec["enable ${site_name}"],

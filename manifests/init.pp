@@ -91,6 +91,13 @@ class ubuntu_lamp_tools (
     unless  => 'apache2ctl -M | grep rewrite',
   }
 
+  exec { "disable 000-default":
+    command => "sudo a2dissite 000-default",
+    require => Package['apache2'],
+    notify  => Service['apache2'],
+    unless  => 'test ! -f /etc/apache2/sites-enabled/000-default.conf'
+  }
+
   exec { 'composer':
     cwd     => '/tmp',
     command => '/vagrant/puppet/modules/ubuntu_lamp_tools/shell/composer.sh', #TODO: Replace with dynamic path
