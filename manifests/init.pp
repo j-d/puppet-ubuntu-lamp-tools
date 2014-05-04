@@ -53,6 +53,7 @@ class ubuntu_lamp_tools (
   file { '/var/www/html':
     ensure  => 'absent',
     require => Package['apache2'],
+    force   => 'yes',
   }
 
   service { 'apache2':
