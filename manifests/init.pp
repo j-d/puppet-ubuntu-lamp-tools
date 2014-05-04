@@ -21,13 +21,11 @@ class ubuntu_lamp_tools (
     before  => File["${flags_folder}/apt-get_first_run"]
   }
 
-  # Create a cron job only to update apt-get after restart
   cron { 'apt-get update':
     command => '/usr/bin/apt-get update',
     special => 'reboot',
   }
 
-  # Install all the required packages
   package {
     [
       'apache2',
@@ -44,6 +42,17 @@ class ubuntu_lamp_tools (
       'acl',            # Required to assign file permissions in Symfony
     ]:
     ensure => 'latest'
+  }
+
+  # Remove sample file created by apache installation
+  file { '/var/www/html/index.html':
+    ensure  => 'absent',
+    require => Package['apache2'],
+  }
+
+  file { '/var/www/html':
+    ensure  => 'absent',
+    require => Package['apache2'],
   }
 
   service { 'apache2':
