@@ -37,6 +37,7 @@ class ubuntu_lamp_tools (
       'php5-curl',
       'php5-mysql',
       'php5-intl',
+      'php5-mcrypt',
       'mysql-server',
       'phpmyadmin',
       'curl',           # Required to download composer
@@ -89,6 +90,13 @@ class ubuntu_lamp_tools (
     require => Package['apache2'],
     notify  => Service['apache2'],
     unless  => 'apache2ctl -M | grep rewrite',
+  }
+
+  exec { 'enable mcrypt':
+    command  => 'php5enmod mcrypt',
+    require  => Package['apache2'],
+    notify   => Service['apache2'],
+    creates  => '/etc/php5/apache2/conf.d/20-mcrypt.ini',
   }
 
   exec { "disable 000-default":
