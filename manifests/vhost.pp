@@ -1,6 +1,7 @@
 class ubuntu_lamp_tools::vhost (
     $site_name   = undef,
     $server_name = undef,
+    $ports       = ['80', '8080'],
   ) {
   if $site_name == undef {
     fail('Site name not defined, please use site_name => \'sample\'')
@@ -31,4 +32,15 @@ class ubuntu_lamp_tools::vhost (
     command => "sudo a2ensite ${site_name}",
     creates => "/etc/apache2/sites-enabled/${site_name}.conf"
   }
+
+  define apache_port { # foreach workaround
+    line { "ports.conf ${name}":
+      file => '/etc/apache2/ports.conf',
+      line => "Listen ${name}",
+      require => Package['apache2'],
+      notify  => Service['apache2'],
+    }
+  }
+
+  apache_port { $ports: }
 }
