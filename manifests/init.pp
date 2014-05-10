@@ -125,4 +125,20 @@ class ubuntu_lamp_tools (
       Package['curl'],
     ],
   }
+
+  # Change the system time
+  file { '/etc/timezone':
+    ensure  => 'file',
+    path    => '/etc/timezone',
+    content => "${timezone}\n",
+    require => Package['apache2'],
+    notify  => [
+      Service['apache2'],
+      Exec['dpkg-reconfigure-tzdata'],
+    ],
+  }
+
+  exec { 'dpkg-reconfigure-tzdata':
+    command => 'dpkg-reconfigure --frontend noninteractive tzdata',
+  }
 }
