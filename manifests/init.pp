@@ -139,6 +139,7 @@ class ubuntu_lamp_tools (
   }
 
   exec { 'dpkg-reconfigure-tzdata':
-    command => 'dpkg-reconfigure --frontend noninteractive tzdata',
+    command     => 'dpkg-reconfigure --frontend noninteractive tzdata',
+    refreshonly => true,
   }
 }
