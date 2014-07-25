@@ -1,9 +1,9 @@
 <% @ports.each do |port| %>
 <VirtualHost *:<%= port %>>
-    DocumentRoot "/var/www/web"
+    DocumentRoot "/var/www/<%= @site_name %>/web"
     DirectoryIndex app.php
     ServerName <%= @server_name %>
-    <Directory "/var/www/web">
+    <Directory "/var/www/<%= @site_name %>/web">
         AllowOverride All
         Allow from All
     </Directory>
