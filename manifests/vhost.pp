@@ -2,6 +2,9 @@ class ubuntu_lamp_tools::vhost (
     $site_name   = undef,
     $server_name = undef,
     $ports       = ['80', '8080'],
+    $server_alias = '',
+    $server_document_root = '/var/www',
+    $directory_index = 'app.php'
   ) {
   if $site_name == undef {
     fail('Site name not defined, please use site_name => \'sample\'')

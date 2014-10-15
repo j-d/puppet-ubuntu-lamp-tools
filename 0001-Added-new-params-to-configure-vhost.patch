@@ -1,0 +1,60 @@
+From bc596ba1706922dc12afbae65bd5bed9c6cbc0c0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jes=C3=BAs=20Ja=C3=A9n=20D=C3=ADaz?=
+ <jesus.jaen@open-phoenix.com>
+Date: Wed, 15 Oct 2014 09:02:31 +0100
+Subject: [PATCH] Added new params to configure vhost:
+
+Example:
+class { 'ubuntu_lamp_tools::vhost':
+  site_name   => 'sitename',
+  server_name => 'server.local',
+  server_alias => '/alias',
+  server_document_root => '/var/www/aplication/web',
+  directory_index => 'app.php',
+}
+---
+ manifests/vhost.pp       |  3 +++
+ templates/vhost.conf.erb | 11 +++++++----
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/manifests/vhost.pp b/manifests/vhost.pp
+index dda1625..c0205af 100644
+--- a/manifests/vhost.pp
++++ b/manifests/vhost.pp
+@@ -2,6 +2,9 @@ class ubuntu_lamp_tools::vhost (
+     $site_name   = undef,
+     $server_name = undef,
+     $ports       = ['80', '8080'],
++    $server_alias = '',
++    $server_document_root = '/var/www',
++    $directory_index = 'app.php'
+   ) {
+   if $site_name == undef {
+     fail('Site name not defined, please use site_name => \'sample\'')
+diff --git a/templates/vhost.conf.erb b/templates/vhost.conf.erb
+index b8674d8..232bd2c 100644
+--- a/templates/vhost.conf.erb
++++ b/templates/vhost.conf.erb
+@@ -1,11 +1,14 @@
+ <% @ports.each do |port| %>
+ <VirtualHost *:<%= port %>>
+-    DocumentRoot "/var/www/web"
+-    DirectoryIndex app.php
++    <% if @server_alias != '' %>
++    Alias <%= @server_alias %> "<%= @server_document_root %>"
++    <% end %>
++    DocumentRoot "<%= @server_document_root %>"
++    DirectoryIndex <%= @directory_index %>
+     ServerName <%= @server_name %>
+-    <Directory "/var/www/web">
++    <Directory "<%= @server_document_root %>">
+         AllowOverride All
+         Allow from All
+     </Directory>
+ </VirtualHost>
+-<% end %>
+\ No newline at end of file
++<% end %>
+-- 
+1.8.3.2
+
