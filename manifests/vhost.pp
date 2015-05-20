@@ -4,7 +4,7 @@ class ubuntu_lamp_tools::vhost (
     $web_folder           = '/web',
     $ports                = ['80', '8080'],
     $server_alias         = '',
-    $server_document_root = "/var/www",
+    $server_document_root = '/var/www',
     $directory_index      = 'app.php'
   ) {
   $server_document_root = "${server_document_root}${web_folder}"
