@@ -3,10 +3,10 @@
     <% if @server_alias != '' %>
     Alias <%= @server_alias %> "<%= @server_document_root %>"
     <% end %>
-    DocumentRoot "<%= @server_document_root %>"
+    DocumentRoot "<%= @server_document_root %><%= @web_folder %>"
     DirectoryIndex <%= @directory_index %>
     ServerName <%= @server_name %>
-    <Directory "<%= @server_document_root %>">
+    <Directory "<%= @server_document_root %><%= @web_folder %>">
         AllowOverride All
         Allow from All
     </Directory>
