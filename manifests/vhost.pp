@@ -1,9 +1,10 @@
 class ubuntu_lamp_tools::vhost (
     $site_name            = undef,
     $server_name          = undef,
+    $web_folder           = '/web',
     $ports                = ['80', '8080'],
     $server_alias         = '',
-    $server_document_root = '/var/www',
+    $server_document_root = "/var/www${web_folder}",
     $directory_index      = 'app.php'
   ) {
   if $site_name == undef {
