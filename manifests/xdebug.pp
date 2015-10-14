@@ -67,7 +67,7 @@ class ubuntu_lamp_tools::xdebug (
 
   line { 'php.ini cli xdebug remote_autostart':
     file => '/etc/php5/cli/php.ini',
-    line => ';xdebug.remote_autostart = On',
+    line => 'xdebug.remote_autostart = On',
     require => Package['php5-xdebug'],
     notify  => Service['apache2'],
   }
