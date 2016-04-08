@@ -6,7 +6,7 @@
     DocumentRoot "<%= @server_document_root %>/<%= @site_name %><%= @web_folder %>"
     DirectoryIndex <%= @directory_index %>
     ServerName <%= @server_name %>
-    <Directory "<%= @server_document_root %><%= @web_folder %>">
+    <Directory "<%= @server_document_root %>/<%= @site_name %><%= @web_folder %>">
         AllowOverride All
         Allow from All
     </Directory>
