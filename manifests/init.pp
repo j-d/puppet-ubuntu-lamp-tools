@@ -142,4 +142,14 @@ class ubuntu_lamp_tools (
     command     => 'dpkg-reconfigure --frontend noninteractive tzdata',
     refreshonly => true,
   }
+
+  # Open MySQL connections
+  exec { 'open mysql connections':
+    command => "sed -i \"47s^.*^# bind-address          = 127.0.0.1^\" /etc/mysql/my.cnf;
+                touch /.ubuntu_lamp_tools-flags/myql_securty;
+                service mysql stop;
+                service mysql start;",
+    require => Package['postgresql'],
+    creates => "/.ubuntu_lamp_tools-flags/myql_securty",
+  }
 }
