@@ -58,6 +58,13 @@ class ubuntu_lamp_tools::xdebug (
     notify  => Service['apache2'],
   }
 
+  line { 'php.ini apache xdebug nesting':
+    file => '/etc/php5/apache2/php.ini',
+    line => 'xdebug.max_nesting_level = 256',
+    require => Package['php5-xdebug'],
+    notify  => Service['apache2'],
+  }
+
   line { 'php.ini cli xdebug remote_enable':
     file => '/etc/php5/cli/php.ini',
     line => 'xdebug.remote_enable = On',
@@ -67,7 +74,7 @@ class ubuntu_lamp_tools::xdebug (
 
   line { 'php.ini cli xdebug remote_autostart':
     file => '/etc/php5/cli/php.ini',
-    line => ';xdebug.remote_autostart = On',
+    line => 'xdebug.remote_autostart = Off',
     require => Package['php5-xdebug'],
     notify  => Service['apache2'],
   }
@@ -103,6 +110,13 @@ class ubuntu_lamp_tools::xdebug (
   line { 'php.ini cli xdebug remote_log':
     file => '/etc/php5/cli/php.ini',
     line => ';xdebug.remote_log = /var/www/xdebug.log',
+    require => Package['php5-xdebug'],
+    notify  => Service['apache2'],
+  }
+
+  line { 'php.ini cli xdebug nesting':
+    file => '/etc/php5/cli/php.ini',
+    line => 'xdebug.max_nesting_level = 256',
     require => Package['php5-xdebug'],
     notify  => Service['apache2'],
   }
