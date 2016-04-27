@@ -84,6 +84,26 @@ class ubuntu_lamp_tools (
     line => 'short_open_tag = Off',
   }
 
+  line { 'php.ini cli memory limit':
+    file => '/etc/php5/cli/php.ini',
+    line => 'memory_limit = 2048M',
+  }
+
+  line { 'php.ini apache memory limit':
+    file => '/etc/php5/apache2/php.ini',
+    line => 'memory_limit = 2048M',
+  }
+
+  line { 'php.ini cli max execution time':
+    file => '/etc/php5/cli/php.ini',
+    line => 'max_execution_time = 300',
+  }
+
+  line { 'php.ini apache max execution time':
+    file => '/etc/php5/apache2/php.ini',
+    line => 'max_execution_time = 300',
+  }
+
   exec { 'apt environmental variables':
     unless  => 'dpkg --get-selections | grep -v deinstall | grep phpmyadmin',
     command => "echo mysql-server mysql-server/root_password       password $mysql_password | debconf-set-selections;
