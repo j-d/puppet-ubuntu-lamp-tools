@@ -40,6 +40,7 @@ class ubuntu_lamp_tools (
       'phpmyadmin',
       'curl',           # Required to download composer
       'acl',            # Required to assign file permissions in Symfony
+	  'mosh',           # To stablish network-drop proof connections with the VM
     ]:
     ensure => 'latest'
   }
